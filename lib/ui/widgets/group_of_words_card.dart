@@ -77,16 +77,20 @@ class _GroupOfWordsCardState extends State<GroupOfWordsCard> {
           Expanded(
             child: GestureDetector(
               onTap: () async {
-                await Navigator.push(
+                bool shouldRefresh = await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => CardScreen(
-                      listOfQuestion:
-                          widget.questionGroupModel.listOfQuestionInGroups,
-                    ),
+                      userSolvedQuestionModel: widget.userSolvedQuestionModel,
+                      questionGroupModel: widget.questionGroupModel,
+                      ),
                   ),
                 );
-                widget.onTap();
+                if(shouldRefresh){
+                  widget.onTap();
+                }else{
+                  return;
+                }
               },
               child: Container(
                 alignment: Alignment.center,

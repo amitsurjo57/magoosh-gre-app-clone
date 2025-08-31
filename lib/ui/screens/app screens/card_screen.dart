@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:magoosh_gre_app_clone/main.dart';
+import '../../../models/question_model.dart';
+import '../../../models/user_solved_question_model.dart';
 import '../../widgets/common_appbar.dart';
 import '../../widgets/common_drawer.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flip_card/flip_card.dart';
 
 class CardScreen extends StatefulWidget {
-  final List<dynamic> listOfQuestion;
+  final QuestionGroupModel questionGroupModel;
+  final UserSolvedQuestionModel? userSolvedQuestionModel;
 
-  const CardScreen({super.key, required this.listOfQuestion});
+  const CardScreen({
+    super.key,
+    required this.questionGroupModel,
+    this.userSolvedQuestionModel,
+  });
 
   @override
   State<CardScreen> createState() => _CardScreenState();
@@ -16,20 +24,124 @@ class CardScreen extends StatefulWidget {
 class _CardScreenState extends State<CardScreen> {
   final FlipCardController _flipCardController = FlipCardController();
 
+  List<dynamic> _listOfQuestion = [];
+  List<dynamic> _listOfSolvedQuestion = [];
   int _index = 0;
+  bool _didAnythingChange = false;
+  bool _inProgress = false;
+
+  @override
+  void initState() {
+    _getAndFormatData();
+    super.initState();
+  }
+
+  void _getAndFormatData() {
+    _listOfQuestion = widget.questionGroupModel.listOfQuestionInGroups;
+    _listOfSolvedQuestion = widget.userSolvedQuestionModel?.solved ?? [];
+
+
+    for (int i = 0; i < _listOfQuestion.length; i++) {
+      if(_listOfSolvedQuestion.contains(_listOfQuestion[i]['question'])){
+        _listOfQuestion.removeAt(i);
+      }
+    }
+
+    logger.i(
+      "List of question in groups:\n$_listOfQuestion",
+    );
+
+    logger.i(
+      "User Solved question:\n$_listOfSolvedQuestion",
+    );
+    _listOfQuestion.shuffle();
+
+    setState(() {});
+  }
+
+  void _onTapKnew() {
+    _didAnythingChange = true;
+    _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
+    _listOfQuestion.removeAt(_index);
+    _index++;
+    _flipCardController.toggleCardWithoutAnimation();
+    setState(() {});
+  }
+
+  void _onTapDoNotKnew() {
+    _listOfQuestion.shuffle();
+    _index++;
+    _flipCardController.toggleCardWithoutAnimation();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: commonAppbar(),
-      endDrawer: commonDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: FlipCard(
-          controller: _flipCardController,
-          front: _front(),
-          back: _back(),
-          direction: FlipDirection.HORIZONTAL,
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, _) async {
+        if (didPop) {
+          return;
+        }
+
+        _inProgress = true;
+        setState(() {});
+
+        try {
+          if (_didAnythingChange) {
+            final userId = await sharedPreferenceService.getData();
+
+            final solved = await supabase
+                .from('solved')
+                .select()
+                .eq('user_id', userId ?? '')
+                .single();
+
+            logger.d(solved['solved_question']);
+
+            List<dynamic> listOfAllSolvedQuestion = solved['solved_question'];
+
+            for (Map<String, dynamic> qus in listOfAllSolvedQuestion) {
+              if (widget.questionGroupModel.groupId == qus['group_id']) {
+                qus['solved'] = _listOfSolvedQuestion;
+                break;
+              }
+            }
+
+            await supabase
+                .from('solved')
+                .update({'solved_question': listOfAllSolvedQuestion})
+                .eq('user_id', userId ?? "")
+                .single();
+
+            _inProgress = true;
+            setState(() {});
+          }
+        } catch (e) {
+          logger.e(e.toString());
+        }
+
+        if (context.mounted) {
+          Navigator.pop(context, _didAnythingChange);
+        }
+      },
+      child: Scaffold(
+        appBar: commonAppbar(),
+        endDrawer: commonDrawer(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: Visibility(
+            visible: !_inProgress,
+            replacement: Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            ),
+            child: FlipCard(
+              controller: _flipCardController,
+              front: _front(),
+              back: _back(),
+              direction: FlipDirection.HORIZONTAL,
+            ),
+          ),
         ),
       ),
     );
@@ -55,7 +167,7 @@ class _CardScreenState extends State<CardScreen> {
               border: Border(bottom: BorderSide(color: Color(0xFFE5E5E5))),
             ),
             child: Text(
-              widget.listOfQuestion[_index]['question'],
+              _listOfQuestion[_index]['question'],
               style: TextStyle(fontSize: 32),
             ),
           ),
@@ -94,19 +206,15 @@ class _CardScreenState extends State<CardScreen> {
           spacing: 16,
           children: [
             Text(
-              widget.listOfQuestion[_index]['question'],
+              _listOfQuestion[_index]['question'],
               style: TextStyle(fontSize: 28, fontWeight: FontWeight.w500),
             ),
             SizedBox(
               width: 300,
-              child: Text(widget.listOfQuestion[_index]['answer']),
+              child: Text(_listOfQuestion[_index]['answer']),
             ),
             MaterialButton(
-              onPressed: () {
-                _flipCardController.toggleCardWithoutAnimation();
-                _index++;
-                setState(() {});
-              },
+              onPressed: _onTapKnew,
               color: Color(0xFFBBF4CB),
               height: 60,
               minWidth: double.minPositive,
@@ -122,11 +230,7 @@ class _CardScreenState extends State<CardScreen> {
               ),
             ),
             MaterialButton(
-              onPressed: () {
-                _flipCardController.toggleCardWithoutAnimation();
-                _index++;
-                setState(() {});
-              },
+              onPressed: _onTapDoNotKnew,
               color: Color(0xFFF9CCCD),
               height: 60,
               minWidth: double.minPositive,
