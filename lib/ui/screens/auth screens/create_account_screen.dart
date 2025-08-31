@@ -1,10 +1,10 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:magoosh_gre_app_clone/main.dart';
-import 'package:magoosh_gre_app_clone/service/auth_service/create_account_service.dart';
-import 'package:magoosh_gre_app_clone/ui/screens/auth%20screens/login_screen.dart';
-import 'package:magoosh_gre_app_clone/ui/widgets/my_text_form_field.dart';
-import 'package:magoosh_gre_app_clone/utils/app_colors.dart';
+import '../../../main.dart';
+import '../../../service/auth_service/create_account_service.dart';
+import 'login_screen.dart';
+import '../../widgets/my_text_form_field.dart';
+import '../../../utils/app_colors.dart';
 
 class CreateAccountScreen extends StatefulWidget {
   const CreateAccountScreen({super.key});

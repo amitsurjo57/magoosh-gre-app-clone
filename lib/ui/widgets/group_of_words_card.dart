@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:magoosh_gre_app_clone/models/question_model.dart';
-
+import '../../models/question_model.dart';
+import '../../models/user_solved_question_model.dart';
 import '../screens/app screens/card_screen.dart';
 
 class GroupOfWordsCard extends StatefulWidget {
+  final void Function() onTap;
+  final UserSolvedQuestionModel? userSolvedQuestionModel;
   final QuestionGroupModel questionGroupModel;
   final int groupIndex;
 
@@ -11,6 +13,8 @@ class GroupOfWordsCard extends StatefulWidget {
     super.key,
     required this.questionGroupModel,
     required this.groupIndex,
+    this.userSolvedQuestionModel,
+    required this.onTap,
   });
 
   @override
@@ -25,7 +29,9 @@ class _GroupOfWordsCardState extends State<GroupOfWordsCard> {
   void initState() {
     super.initState();
     _totalQuestion = widget.questionGroupModel.totalQuestion;
-    _masteredQuestionCount = 0;
+    _masteredQuestionCount = widget.userSolvedQuestionModel != null
+        ? widget.userSolvedQuestionModel!.solved.length
+        : 0;
   }
 
   @override
@@ -70,8 +76,8 @@ class _GroupOfWordsCardState extends State<GroupOfWordsCard> {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () {
-                Navigator.push(
+              onTap: () async {
+                await Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) => CardScreen(
@@ -80,6 +86,7 @@ class _GroupOfWordsCardState extends State<GroupOfWordsCard> {
                     ),
                   ),
                 );
+                widget.onTap();
               },
               child: Container(
                 alignment: Alignment.center,

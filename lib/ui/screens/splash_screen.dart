@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:magoosh_gre_app_clone/ui/screens/auth%20screens/login_screen.dart';
-import 'package:magoosh_gre_app_clone/utils/image_paths.dart';
+import 'auth%20screens/login_screen.dart';
+import '../../utils/image_paths.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

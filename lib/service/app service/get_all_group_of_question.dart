@@ -1,7 +1,7 @@
 import '../../main.dart';
 import '../../models/question_model.dart';
 
-Future<List<QuestionGroupModel>?> getAllData() async {
+Future<List<QuestionGroupModel>?> getAllGroupOfQuestion() async {
   try {
     final getAllQuestionGroup = await supabase.from('question_group').select();
 

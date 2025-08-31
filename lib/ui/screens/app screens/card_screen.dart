@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:magoosh_gre_app_clone/ui/widgets/common_appbar.dart';
-import 'package:magoosh_gre_app_clone/ui/widgets/common_drawer.dart';
+import '../../widgets/common_appbar.dart';
+import '../../widgets/common_drawer.dart';
 import 'package:flip_card/flip_card_controller.dart';
 import 'package:flip_card/flip_card.dart';
 
@@ -17,12 +17,6 @@ class _CardScreenState extends State<CardScreen> {
   final FlipCardController _flipCardController = FlipCardController();
 
   int _index = 0;
-
-  @override
-  void dispose() {
-    _flipCardController.controller!.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -14,7 +14,8 @@ class SharedPreferenceService {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
 
-    return sharedPreferences.getString(_saveKey);
+    return sharedPreferences.getString(_saveKey) ??
+        "1d34d459-5a89-4359-b4a4-3a993254e854";
   }
 
   Future<void> clearData() async {

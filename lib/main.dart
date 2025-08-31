@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:magoosh_gre_app_clone/service/auth_service/shared_preference_service.dart';
 import 'package:magoosh_gre_app_clone/ui/screens/app%20screens/home_screen.dart';
 import 'package:magoosh_gre_app_clone/utils/app_theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final Logger logger = Logger();
+
+final SharedPreferenceService sharedPreferenceService =
+    SharedPreferenceService();
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

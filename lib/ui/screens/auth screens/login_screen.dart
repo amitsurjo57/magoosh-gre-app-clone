@@ -3,7 +3,7 @@ import '../../../utils/app_colors.dart';
 import '../../widgets/my_text_form_field.dart';
 import 'package:email_validator/email_validator.dart';
 import '../../../service/auth_service/login_service.dart';
-import 'package:magoosh_gre_app_clone/ui/screens/auth%20screens/create_account_screen.dart';
+import 'create_account_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
