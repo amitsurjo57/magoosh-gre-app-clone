@@ -1,7 +1,7 @@
 import '../../main.dart';
 import '../../models/user_solved_question_model.dart';
 
-Future<List<UserSolvedQuestionModel>?> getUserSolvedQuestion() async {
+Future<List<UserSolvedQuestionModel>> getUserSolvedQuestion() async {
   try{
 
     final userId = await sharedPreferenceService.getData();
@@ -12,7 +12,7 @@ Future<List<UserSolvedQuestionModel>?> getUserSolvedQuestion() async {
         .eq('user_id', userId ?? "")
         .single();
 
-    logger.d(getUserSolvedQuestions['solved_question']);
+    logger.i(getUserSolvedQuestions['solved_question']);
 
     List<UserSolvedQuestionModel> listOfSolvedQuestion = [];
 
@@ -29,6 +29,6 @@ Future<List<UserSolvedQuestionModel>?> getUserSolvedQuestion() async {
     return listOfSolvedQuestion;
   }catch(e){
     logger.e(e.toString());
-    return null;
+    return [];
   }
 }

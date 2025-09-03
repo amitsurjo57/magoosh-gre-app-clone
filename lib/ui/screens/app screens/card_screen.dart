@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:magoosh_gre_app_clone/main.dart';
 import '../../../models/question_model.dart';
-import '../../../models/user_solved_question_model.dart';
 import '../../widgets/common_appbar.dart';
 import '../../widgets/common_drawer.dart';
 import 'package:flip_card/flip_card_controller.dart';
@@ -9,12 +8,12 @@ import 'package:flip_card/flip_card.dart';
 
 class CardScreen extends StatefulWidget {
   final QuestionGroupModel questionGroupModel;
-  final UserSolvedQuestionModel? userSolvedQuestionModel;
+  final List listOfUserSolvedQuestions;
 
   const CardScreen({
     super.key,
     required this.questionGroupModel,
-    this.userSolvedQuestionModel,
+    required this.listOfUserSolvedQuestions,
   });
 
   @override
@@ -32,28 +31,26 @@ class _CardScreenState extends State<CardScreen> {
 
   @override
   void initState() {
-    _getAndFormatData();
     super.initState();
+    _getAndFormatData();
   }
 
   void _getAndFormatData() {
+    _listOfSolvedQuestion.clear();
+    _listOfQuestion.clear();
+
     _listOfQuestion = widget.questionGroupModel.listOfQuestionInGroups;
-    _listOfSolvedQuestion = widget.userSolvedQuestionModel?.solved ?? [];
+    _listOfSolvedQuestion = widget.listOfUserSolvedQuestions;
 
-
-    for (int i = 0; i < _listOfQuestion.length; i++) {
-      if(_listOfSolvedQuestion.contains(_listOfQuestion[i]['question'])){
-        _listOfQuestion.removeAt(i);
-      }
+    if (_listOfSolvedQuestion.isNotEmpty) {
+      _listOfQuestion.removeWhere(
+        (qus) => _listOfSolvedQuestion.contains(qus['question']),
+      );
     }
 
-    logger.i(
-      "List of question in groups:\n$_listOfQuestion",
-    );
+    logger.i("List of question in groups:\n$_listOfQuestion");
 
-    logger.i(
-      "User Solved question:\n$_listOfSolvedQuestion",
-    );
+    logger.i("User Solved question:\n$_listOfSolvedQuestion");
     _listOfQuestion.shuffle();
 
     setState(() {});
@@ -64,6 +61,7 @@ class _CardScreenState extends State<CardScreen> {
     _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
     _listOfQuestion.removeAt(_index);
     _index++;
+    if (_index > _listOfQuestion.length) _index = 0;
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
@@ -71,6 +69,7 @@ class _CardScreenState extends State<CardScreen> {
   void _onTapDoNotKnew() {
     _listOfQuestion.shuffle();
     _index++;
+    if (_index > _listOfQuestion.length) _index = 0;
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
@@ -87,9 +86,13 @@ class _CardScreenState extends State<CardScreen> {
         _inProgress = true;
         setState(() {});
 
+        bool shouldPop = false;
+
         try {
+          shouldPop = true;
           if (_didAnythingChange) {
             final userId = await sharedPreferenceService.getData();
+            final groupId = widget.questionGroupModel.groupId;
 
             final solved = await supabase
                 .from('solved')
@@ -97,12 +100,12 @@ class _CardScreenState extends State<CardScreen> {
                 .eq('user_id', userId ?? '')
                 .single();
 
-            logger.d(solved['solved_question']);
+            logger.i(solved);
 
-            List<dynamic> listOfAllSolvedQuestion = solved['solved_question'];
+            List<dynamic> userSolvedQuestions = solved['solved_question'];
 
-            for (Map<String, dynamic> qus in listOfAllSolvedQuestion) {
-              if (widget.questionGroupModel.groupId == qus['group_id']) {
+            for (var qus in userSolvedQuestions) {
+              if (qus['group_id'] == groupId) {
                 qus['solved'] = _listOfSolvedQuestion;
                 break;
               }
@@ -110,18 +113,19 @@ class _CardScreenState extends State<CardScreen> {
 
             await supabase
                 .from('solved')
-                .update({'solved_question': listOfAllSolvedQuestion})
-                .eq('user_id', userId ?? "")
-                .single();
+                .update({'solved_question': userSolvedQuestions})
+                .eq('user_id', userId ?? "");
 
             _inProgress = true;
             setState(() {});
           }
         } catch (e) {
+          shouldPop = false;
+          _didAnythingChange = false;
           logger.e(e.toString());
         }
 
-        if (context.mounted) {
+        if (context.mounted && shouldPop) {
           Navigator.pop(context, _didAnythingChange);
         }
       },

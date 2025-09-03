@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/question_model.dart';
 import '../../models/user_solved_question_model.dart';
-import '../screens/app screens/card_screen.dart';
 
 class GroupOfWordsCard extends StatefulWidget {
   final void Function() onTap;
@@ -76,22 +75,7 @@ class _GroupOfWordsCardState extends State<GroupOfWordsCard> {
           ),
           Expanded(
             child: GestureDetector(
-              onTap: () async {
-                bool shouldRefresh = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CardScreen(
-                      userSolvedQuestionModel: widget.userSolvedQuestionModel,
-                      questionGroupModel: widget.questionGroupModel,
-                      ),
-                  ),
-                );
-                if(shouldRefresh){
-                  widget.onTap();
-                }else{
-                  return;
-                }
-              },
+              onTap: widget.onTap,
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(

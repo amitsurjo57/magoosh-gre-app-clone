@@ -1,4 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    android:enableOnBackInvokedCallback="true"
     <application
         android:label="magoosh_gre_app_clone"
         android:name="${applicationName}"
