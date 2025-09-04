@@ -57,7 +57,7 @@ class _CardScreenState extends State<CardScreen> {
   }
 
   void _onTapKnew() {
-    logger.e("Index: $_index\nLength: ${_listOfQuestion.length}");
+    logger.d("Index: $_index\nLength: ${_listOfQuestion.length}");
     _didAnythingChange = true;
     _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
     _listOfQuestion.removeAt(_index);
@@ -71,7 +71,7 @@ class _CardScreenState extends State<CardScreen> {
   }
 
   void _onTapDoNotKnew() {
-    logger.e("Index: $_index\nLength: ${_listOfQuestion.length}");
+    logger.d("Index: $_index\nLength: ${_listOfQuestion.length}");
     _listOfQuestion.shuffle();
     if (_index == _listOfQuestion.length - 1) {
       _index = 0;
