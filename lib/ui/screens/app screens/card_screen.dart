@@ -58,26 +58,26 @@ class _CardScreenState extends State<CardScreen> {
 
   void _onTapKnew() {
     logger.e("Index: $_index\nLength: ${_listOfQuestion.length}");
+    _didAnythingChange = true;
+    _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
+    _listOfQuestion.removeAt(_index);
     if (_index == _listOfQuestion.length - 1) {
       _index = 0;
     } else {
       _index++;
     }
-    _didAnythingChange = true;
-    _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
-    _listOfQuestion.removeAt(_index);
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
 
   void _onTapDoNotKnew() {
     logger.e("Index: $_index\nLength: ${_listOfQuestion.length}");
+    _listOfQuestion.shuffle();
     if (_index == _listOfQuestion.length - 1) {
       _index = 0;
     } else {
       _index++;
     }
-    _listOfQuestion.shuffle();
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
@@ -128,6 +128,7 @@ class _CardScreenState extends State<CardScreen> {
               if (context.mounted) {
                 Navigator.pop(context, _didAnythingChange);
               }
+              return;
             }
 
             bool isGroupExist = false;
@@ -156,6 +157,7 @@ class _CardScreenState extends State<CardScreen> {
               if (context.mounted) {
                 Navigator.pop(context, _didAnythingChange);
               }
+              return;
             }
 
             for (var qus in userSolvedQuestions) {
