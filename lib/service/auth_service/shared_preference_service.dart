@@ -14,8 +14,17 @@ class SharedPreferenceService {
     final SharedPreferences sharedPreferences =
         await SharedPreferences.getInstance();
 
-    return sharedPreferences.getString(_saveKey) ??
-        "1d34d459-5a89-4359-b4a4-3a993254e854";
+    return sharedPreferences.getString(_saveKey);
+  }
+
+  Future<bool> isLooggedIn() async{
+    String? uid = await getData();
+
+    if(uid != null){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   Future<void> clearData() async {

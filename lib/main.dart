@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'ui/screens/splash_screen.dart';
 import 'service/auth_service/shared_preference_service.dart';
-import 'ui/screens/app%20screens/home_screen.dart';
 import 'utils/app_theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -23,15 +23,26 @@ Future<void> main() async {
 
 final SupabaseClient supabase = Supabase.instance.client;
 
-class MagooshGreAppClone extends StatelessWidget {
+class MagooshGreAppClone extends StatefulWidget {
   const MagooshGreAppClone({super.key});
+
+  @override
+  State<MagooshGreAppClone> createState() => _MagooshGreAppCloneState();
+}
+
+class _MagooshGreAppCloneState extends State<MagooshGreAppClone> {
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.appTheme(),
-      home: HomeScreen(),
+      home: SplashScreen(),
     );
   }
 }

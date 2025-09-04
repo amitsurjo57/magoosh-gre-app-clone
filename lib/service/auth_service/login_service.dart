@@ -27,7 +27,7 @@ Future<ResponseModel> loginUser({
     logger.e(e.toString());
     if (e.code == "invalid_credentials") {
       return ResponseModel(message: "User Not Found", isSuccessful: false);
-    }else if(e.code == 'email_not_confirmed'){
+    } else if (e.code == 'email_not_confirmed') {
       return ResponseModel(message: e.message, isSuccessful: false);
     }
   } catch (e) {

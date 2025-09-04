@@ -57,19 +57,27 @@ class _CardScreenState extends State<CardScreen> {
   }
 
   void _onTapKnew() {
+    logger.e("Index: $_index\nLength: ${_listOfQuestion.length}");
+    if (_index == _listOfQuestion.length - 1) {
+      _index = 0;
+    } else {
+      _index++;
+    }
     _didAnythingChange = true;
     _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
     _listOfQuestion.removeAt(_index);
-    _index++;
-    if (_index > _listOfQuestion.length) _index = 0;
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
 
   void _onTapDoNotKnew() {
+    logger.e("Index: $_index\nLength: ${_listOfQuestion.length}");
+    if (_index == _listOfQuestion.length - 1) {
+      _index = 0;
+    } else {
+      _index++;
+    }
     _listOfQuestion.shuffle();
-    _index++;
-    if (_index > _listOfQuestion.length) _index = 0;
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
@@ -86,10 +94,7 @@ class _CardScreenState extends State<CardScreen> {
         _inProgress = true;
         setState(() {});
 
-        bool shouldPop = false;
-
         try {
-          shouldPop = true;
           if (_didAnythingChange) {
             final userId = await sharedPreferenceService.getData();
             final groupId = widget.questionGroupModel.groupId;
@@ -102,7 +107,56 @@ class _CardScreenState extends State<CardScreen> {
 
             logger.i(solved);
 
+            logger.d("List of Solved Question: $_listOfSolvedQuestion)");
+
             List<dynamic> userSolvedQuestions = solved['solved_question'];
+
+            if (userSolvedQuestions.isEmpty) {
+              userSolvedQuestions.add({
+                "group_id": groupId,
+                "solved": _listOfSolvedQuestion,
+              });
+
+              await supabase
+                  .from('solved')
+                  .update({'solved_question': userSolvedQuestions})
+                  .eq('user_id', userId ?? "");
+
+              _inProgress = true;
+              setState(() {});
+
+              if (context.mounted) {
+                Navigator.pop(context, _didAnythingChange);
+              }
+            }
+
+            bool isGroupExist = false;
+
+            for (var qus in userSolvedQuestions) {
+              if (qus['group_id'] == groupId) {
+                isGroupExist = true;
+                break;
+              }
+            }
+
+            if (!isGroupExist) {
+              userSolvedQuestions.add({
+                "group_id": groupId,
+                "solved": _listOfSolvedQuestion,
+              });
+
+              await supabase
+                  .from('solved')
+                  .update({'solved_question': userSolvedQuestions})
+                  .eq('user_id', userId ?? "");
+
+              _inProgress = true;
+              setState(() {});
+
+              if (context.mounted) {
+                Navigator.pop(context, _didAnythingChange);
+              }
+            }
 
             for (var qus in userSolvedQuestions) {
               if (qus['group_id'] == groupId) {
@@ -120,18 +174,17 @@ class _CardScreenState extends State<CardScreen> {
             setState(() {});
           }
         } catch (e) {
-          shouldPop = false;
           _didAnythingChange = false;
           logger.e(e.toString());
         }
 
-        if (context.mounted && shouldPop) {
+        if (context.mounted) {
           Navigator.pop(context, _didAnythingChange);
         }
       },
       child: Scaffold(
         appBar: commonAppbar(),
-        endDrawer: commonDrawer(),
+        endDrawer: commonDrawer(context),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Visibility(
@@ -143,6 +196,7 @@ class _CardScreenState extends State<CardScreen> {
               controller: _flipCardController,
               front: _front(),
               back: _back(),
+              flipOnTouch: false,
               direction: FlipDirection.HORIZONTAL,
             ),
           ),
@@ -152,13 +206,9 @@ class _CardScreenState extends State<CardScreen> {
   }
 
   Widget _front() {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 300,
-      decoration: BoxDecoration(
-        color: Color(0xFFF4F4F5),
-        borderRadius: BorderRadius.circular(25),
-      ),
       child: Column(
         children: [
           Container(
@@ -175,17 +225,23 @@ class _CardScreenState extends State<CardScreen> {
               style: TextStyle(fontSize: 32),
             ),
           ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () => _flipCardController.toggleCard(),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Tap to see meaning"),
-                    Icon(Icons.arrow_forward),
-                  ],
+          GestureDetector(
+            onTap: () => _flipCardController.toggleCard(),
+            child: Container(
+              width: double.infinity,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Color(0xFFF4F4F5),
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(25),
                 ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Tap to see meaning"),
+                  Icon(Icons.arrow_forward),
+                ],
               ),
             ),
           ),

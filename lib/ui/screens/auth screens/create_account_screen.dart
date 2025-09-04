@@ -74,7 +74,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   MyTextFormField(
                     textEditingController: _passwordController,
                     hintText: "Enter Your Password",
-                    isObscure: true,
+                    isPasswordField: true,
                     prefixIcon: Icon(
                       Icons.lock_outline,
                       color: AppColors.themeColor,
@@ -131,18 +131,29 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
         );
       }
 
-      final Map<String, dynamic> userInfo = {
-        'user_id': res.data,
-        'email': _emailController.text.trim(),
-        'password': _passwordController.text,
-      };
+      try{
+        final Map<String, dynamic> userInfo = {
+          'user_id': res.data,
+          'email': _emailController.text.trim(),
+          'password': _passwordController.text,
+        };
 
-      await supabase.from('users').insert(userInfo);
+        await supabase.from('users').insert(userInfo);
+
+        final Map<String, dynamic> userSolvedQuestionInfo = {
+          'user_id': res.data,
+          'solved_question': [],
+        };
+
+        await supabase.from('solved').insert(userSolvedQuestionInfo);
+      }catch(e){
+        logger.e(e.toString());
+      }
     } else {
       if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text(res.message)));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(res.message), duration: Duration(seconds: 4)),
+        );
       }
     }
 

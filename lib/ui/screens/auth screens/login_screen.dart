@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:magoosh_gre_app_clone/service/auth_service/shared_preference_service.dart';
+import '../app%20screens/home_screen.dart';
 import '../../../utils/app_colors.dart';
 import '../../widgets/my_text_form_field.dart';
 import 'package:email_validator/email_validator.dart';
@@ -73,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   MyTextFormField(
                     textEditingController: _passwordController,
                     hintText: "Enter Your Password",
-                    isObscure: true,
+                    isPasswordField: true,
                     prefixIcon: Icon(
                       Icons.lock_outline,
                       color: AppColors.themeColor,
@@ -142,10 +144,17 @@ class _LoginScreenState extends State<LoginScreen> {
     );
 
     if (responseModel.isSuccessful) {
+      await SharedPreferenceService().saveData(responseModel.data);
       if (mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(SnackBar(content: Text(responseModel.message)));
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => HomeScreen()),
+          (_) => false,
+        );
       }
     } else {
       if (mounted) {

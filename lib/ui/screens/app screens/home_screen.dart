@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: commonAppbar(),
-      endDrawer: commonDrawer(),
+      endDrawer: commonDrawer(context),
       body: RefreshIndicator(
         onRefresh: () async => await _getData(),
         child: Padding(

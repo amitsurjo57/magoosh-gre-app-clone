@@ -1,6 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:magoosh_gre_app_clone/ui/screens/app%20screens/home_screen.dart';
+import '../../service/auth_service/shared_preference_service.dart';
 import 'auth%20screens/login_screen.dart';
 import '../../utils/image_paths.dart';
 
@@ -16,6 +17,13 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
   late Animation _imageAnimation;
   late Animation _textAnimation;
+
+  bool _isLoggedIn = false;
+
+  Future<void> _isUserLoggedIn() async {
+    _isLoggedIn = await SharedPreferenceService().isLooggedIn();
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -34,10 +42,14 @@ class _SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _animationController, curve: Curves.ease),
     );
 
+    _isUserLoggedIn();
+
     Timer(Duration(milliseconds: 1500), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(
+          builder: (context) => _isLoggedIn ? HomeScreen() : LoginScreen(),
+        ),
       );
     });
   }

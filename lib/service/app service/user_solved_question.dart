@@ -21,7 +21,6 @@ Future<List<UserSolvedQuestionModel>> getUserSolvedQuestion() async {
         UserSolvedQuestionModel(
           groupId: qus['group_id'],
           solved: qus['solved'],
-          notSolved: qus['not solved'],
         ),
       );
     }
