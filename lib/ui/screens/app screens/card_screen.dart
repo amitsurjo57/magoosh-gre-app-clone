@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:magoosh_gre_app_clone/main.dart';
 import '../../../models/question_model.dart';
@@ -22,6 +24,8 @@ class CardScreen extends StatefulWidget {
 
 class _CardScreenState extends State<CardScreen> {
   final FlipCardController _flipCardController = FlipCardController();
+
+  final Random _random = Random();
 
   List<dynamic> _listOfQuestion = [];
   List<dynamic> _listOfSolvedQuestion = [];
@@ -51,33 +55,29 @@ class _CardScreenState extends State<CardScreen> {
     logger.i("List of question in groups:\n$_listOfQuestion");
 
     logger.i("User Solved question:\n$_listOfSolvedQuestion");
-    _listOfQuestion.shuffle();
 
     setState(() {});
   }
 
   void _onTapKnew() {
+    if (_listOfQuestion.isEmpty) {
+      setState(() {});
+      return;
+    }
     logger.d("Index: $_index\nLength: ${_listOfQuestion.length}");
     _didAnythingChange = true;
     _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
     _listOfQuestion.removeAt(_index);
-    if (_index == _listOfQuestion.length - 1) {
-      _index = 0;
-    } else {
-      _index++;
-    }
+    _index = _listOfQuestion.isEmpty
+        ? 0
+        : _random.nextInt(_listOfQuestion.length);
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
 
   void _onTapDoNotKnew() {
     logger.d("Index: $_index\nLength: ${_listOfQuestion.length}");
-    _listOfQuestion.shuffle();
-    if (_index == _listOfQuestion.length - 1) {
-      _index = 0;
-    } else {
-      _index++;
-    }
+    _index = _random.nextInt(_listOfQuestion.length);
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
   }
@@ -194,13 +194,34 @@ class _CardScreenState extends State<CardScreen> {
             replacement: Center(
               child: CircularProgressIndicator(color: Colors.white),
             ),
-            child: FlipCard(
-              controller: _flipCardController,
-              front: _front(),
-              back: _back(),
-              flipOnTouch: false,
-              direction: FlipDirection.HORIZONTAL,
-            ),
+            child: _listOfQuestion.isEmpty
+                ? Container(
+                    width: double.infinity,
+                    height: 200,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25),
+                      border: Border(
+                        bottom: BorderSide(color: Color(0xFFE5E5E5)),
+                      ),
+                    ),
+                    child: Text(
+                      "You solved all questions",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                : FlipCard(
+                    controller: _flipCardController,
+                    front: _front(),
+                    back: _back(),
+                    flipOnTouch: false,
+                    direction: FlipDirection.HORIZONTAL,
+                  ),
           ),
         ),
       ),
