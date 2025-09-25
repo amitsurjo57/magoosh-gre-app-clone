@@ -1,7 +1,7 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import '../../../service/auth%20service/auth_service.dart';
 import '../../../main.dart';
-import '../../../service/auth_service/create_account_service.dart';
 import 'login_screen.dart';
 import '../../widgets/my_text_form_field.dart';
 import '../../../utils/app_colors.dart';
@@ -114,7 +114,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
     _inProgress = true;
     setState(() {});
 
-    final res = await createUser(
+    final res = await AuthService.createUser(
       email: _emailController.text.trim(),
       password: _passwordController.text,
     );

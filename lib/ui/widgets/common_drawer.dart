@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../service/auth_service/shared_preference_service.dart';
+import '../../service/auth service/shared_preference_service.dart';
 import '../screens/auth%20screens/login_screen.dart';
 import '../../utils/app_colors.dart';
 import '../../main.dart';

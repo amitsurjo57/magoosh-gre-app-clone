@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../service/auth service/shared_preference_service.dart';
 import 'app%20screens/home_screen.dart';
-import '../../service/auth_service/shared_preference_service.dart';
 import 'auth%20screens/login_screen.dart';
 import '../../utils/image_paths.dart';
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:magoosh_gre_app_clone/service/auth_service/shared_preference_service.dart';
+import '../../../service/auth%20service/auth_service.dart';
+import '../../../service/auth service/shared_preference_service.dart';
 import '../app%20screens/home_screen.dart';
 import '../../../utils/app_colors.dart';
 import '../../widgets/my_text_form_field.dart';
 import 'package:email_validator/email_validator.dart';
-import '../../../service/auth_service/login_service.dart';
 import 'create_account_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _inProgress = true;
     setState(() {});
 
-    final responseModel = await loginUser(
+    final responseModel = await AuthService.loginUser(
       email: _emailController.text.trim(),
       password: _passwordController.text,
     );

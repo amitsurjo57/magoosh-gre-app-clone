@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'service/auth service/shared_preference_service.dart';
 import 'ui/screens/splash_screen.dart';
-import 'service/auth_service/shared_preference_service.dart';
 import 'utils/app_theme.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
