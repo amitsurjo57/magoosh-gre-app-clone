@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../service/auth%20service/auth_service.dart';
+import '../../../service/auth service/log_in_service.dart';
 import '../../../service/auth service/shared_preference_service.dart';
 import '../app%20screens/home_screen.dart';
 import '../../../utils/app_colors.dart';
@@ -138,7 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
     _inProgress = true;
     setState(() {});
 
-    final responseModel = await AuthService.loginUser(
+    final responseModel = await loginUser(
       email: _emailController.text.trim(),
       password: _passwordController.text,
     );
