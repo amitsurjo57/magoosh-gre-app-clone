@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:magoosh_gre_app_clone/ui/screens/app%20screens/home_screen.dart';
-import 'package:magoosh_gre_app_clone/ui/widgets/group_of_words_card.dart';
+import 'package:magoosh_gre_app_clone/ui/screens/auth%20screens/login_screen.dart';
 import 'package:mockito/mockito.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   testWidgets("Navigation Test", (tester) async {
-    await tester.pumpWidget(MaterialApp(home: HomeScreen()));
-    await tester.tap(find.byType(GroupOfWordsCard));
+    await tester.pumpWidget(MaterialApp(home: LoginScreen()));
+    await tester.enterText(
+      find.byKey(ValueKey('emailField')),
+      'amitsurjo57@gmail.com',
+    );
+    await tester.enterText(find.byKey(ValueKey('passwordField')), '123456789');
+    await tester.tap(find.byKey(ValueKey('login')));
     await tester.pumpAndSettle();
 
-    expect(find.byType(GroupOfWordsCard), findsOneWidget);
+    expect(find.byType(HomeScreen), findsOneWidget);
   });
 }
 
