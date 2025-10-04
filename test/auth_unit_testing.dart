@@ -1,17 +1,27 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:magoosh_gre_app_clone/ui/screens/app%20screens/home_screen.dart';
-import 'package:magoosh_gre_app_clone/ui/widgets/group_of_words_card.dart';
 import 'package:mockito/mockito.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
-  testWidgets("Navigation Test", (tester) async {
-    await tester.pumpWidget(MaterialApp(home: HomeScreen()));
-    await tester.tap(find.byType(GroupOfWordsCard));
-    await tester.pumpAndSettle();
+  test('log in test', () async {
+    final supabase = MockSupabaseClient();
 
-    expect(find.byType(GroupOfWordsCard), findsOneWidget);
+    AuthResponse response = await supabase.auth.signInWithPassword(
+      email: 'amitsurjo57@gmail.com',
+      password: '123456789',
+    );
+    expect(response.user, isA<User>());
+  });
+
+  test('sign up test', () async {
+    final supabase = MockSupabaseClient();
+
+    AuthResponse response = await supabase.auth.signUp(
+      email: 'amitsurjo57@gmail.com',
+      password: '123456789',
+    );
+
+    expect(response.user, isA<User>());
   });
 }
 

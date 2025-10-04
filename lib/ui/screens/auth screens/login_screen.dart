@@ -57,6 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   MyTextFormField(
+                    key: Key("emailField"),
                     textEditingController: _emailController,
                     hintText: "Enter Your Email",
                     prefixIcon: Icon(
@@ -73,6 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   MyTextFormField(
+                    key: Key("passwordField"),
                     textEditingController: _passwordController,
                     hintText: "Enter Your Password",
                     isPasswordField: true,
@@ -91,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     visible: !_inProgress,
                     replacement: Center(child: CircularProgressIndicator()),
                     child: ElevatedButton(
+                      key: Key("login"),
                       onPressed: _onPressedLogin,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.themeColor,
