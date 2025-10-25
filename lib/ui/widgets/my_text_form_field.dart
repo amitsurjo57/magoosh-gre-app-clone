@@ -35,6 +35,7 @@ class _MyTextFormFieldState extends State<MyTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      key: widget.key,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       controller: widget.textEditingController,
       obscureText: widget.isPasswordField ? _isObscureText : false,

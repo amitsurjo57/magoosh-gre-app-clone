@@ -13,12 +13,16 @@ final SharedPreferenceService sharedPreferenceService =
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await initializeSupabase();
+  runApp(MagooshGreAppClone());
+}
+
+Future<void> initializeSupabase() async {
   await Supabase.initialize(
     url: 'https://ssbnwxgtddzuktgloajv.supabase.co',
     anonKey:
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNzYm53eGd0ZGR6dWt0Z2xvYWp2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTYyMTUyNDEsImV4cCI6MjA3MTc5MTI0MX0.You994q3fldXMKW7kFAZ44AKzsQ4KTsHKiZ8PXbQ-7M',
   );
-  runApp(MagooshGreAppClone());
 }
 
 final SupabaseClient supabase = Supabase.instance.client;

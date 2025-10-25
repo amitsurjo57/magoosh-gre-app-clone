@@ -26,7 +26,7 @@ void main() {
 }
 
 class MockSupabaseClient extends Mock implements MockGoTrueClient {
-  get auth => MockGoTrueClient();
+  MockGoTrueClient get auth => MockGoTrueClient();
 }
 
 class MockGoTrueClient extends Mock implements GoTrueClient {
