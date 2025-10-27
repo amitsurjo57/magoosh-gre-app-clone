@@ -12,10 +12,13 @@ void main() {
     ($) async {
       await initializeSupabase();
 
-      await $.pumpWidgetAndSettle(MaterialApp(
+      await $.pumpWidgetAndSettle(
+        MaterialApp(
           debugShowCheckedModeBanner: false,
           theme: AppTheme.appTheme(),
-          home: LoginScreen()));
+          home: LoginScreen(),
+        ),
+      );
 
       await $(#emailField).enterText('amitsurjo57@gmail.com');
       await $(#passwordField).enterText('123456789');
