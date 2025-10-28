@@ -1,3 +1,5 @@
+// patrol develop --target integration_test/app_test.dart
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:magoosh_gre_app_clone/main.dart';
 import 'package:magoosh_gre_app_clone/ui/screens/auth%20screens/login_screen.dart';
