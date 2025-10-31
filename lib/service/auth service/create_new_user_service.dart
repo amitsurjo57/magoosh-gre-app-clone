@@ -14,7 +14,7 @@ Future<ResponseModel> createUser({
 
     final isSuccessful = true;
 
-    logger.d("Message: $message\nisSuccessful: $isSuccessful");
+    doShowLogger? logger.d("Message: $message\nisSuccessful: $isSuccessful") : null;
 
     return ResponseModel(
       message: message,
@@ -22,17 +22,17 @@ Future<ResponseModel> createUser({
       data: res.user!.id,
     );
   } on AuthApiException catch (e) {
-    logger.e(e.toString());
+    doShowLogger? logger.e(e.toString()) : null;
     if (e.code == 'over_email_send_rate_limit') {
       String msg = e.message;
       msg = msg.replaceAll("this", "for verification");
-      logger.e(msg);
+      doShowLogger? logger.e(msg) : null;
       return ResponseModel(message: msg, isSuccessful: false);
     } else if (e.code == 'email_address_invalid') {
       return ResponseModel(message: e.message, isSuccessful: false);
     }
   } catch (e) {
-    logger.e(e.toString());
+    doShowLogger? logger.e(e.toString()) : null;
   }
   return ResponseModel(message: "Something went wrong", isSuccessful: false);
 }

@@ -7,6 +7,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 final Logger logger = Logger();
 
+bool doShowLogger = false;
+
 final SharedPreferenceService sharedPreferenceService =
     SharedPreferenceService();
 

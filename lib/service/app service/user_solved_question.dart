@@ -12,7 +12,7 @@ Future<List<UserSolvedQuestionModel>> getUserSolvedQuestion() async {
         .eq('user_id', userId ?? "")
         .single();
 
-    logger.i(getUserSolvedQuestions['solved_question']);
+    doShowLogger? logger.i(getUserSolvedQuestions['solved_question']) : null;
 
     List<UserSolvedQuestionModel> listOfSolvedQuestion = [];
 
@@ -27,7 +27,7 @@ Future<List<UserSolvedQuestionModel>> getUserSolvedQuestion() async {
 
     return listOfSolvedQuestion;
   }catch(e){
-    logger.e(e.toString());
+    doShowLogger? logger.e(e.toString()) : null;
     return [];
   }
 }

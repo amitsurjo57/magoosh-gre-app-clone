@@ -19,7 +19,7 @@ Future<List<QuestionGroupModel>> getAllGroupOfQuestion() async {
 
     return listOfQuestionGroup;
   } catch (e) {
-    logger.e(e.toString());
+    doShowLogger? logger.e(e.toString()) : null;
     return [];
   }
 }

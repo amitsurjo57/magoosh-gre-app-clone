@@ -147,7 +147,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
 
         await supabase.from('solved').insert(userSolvedQuestionInfo);
       }catch(e){
-        logger.e(e.toString());
+        doShowLogger? logger.e(e.toString()) : null;
       }
     } else {
       if (mounted) {

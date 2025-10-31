@@ -52,9 +52,9 @@ class _CardScreenState extends State<CardScreen> {
       );
     }
 
-    logger.i("List of question in groups:\n$_listOfQuestion");
+    doShowLogger? logger.i("List of question in groups:\n$_listOfQuestion") : null;
 
-    logger.i("User Solved question:\n$_listOfSolvedQuestion");
+    doShowLogger? logger.i("User Solved question:\n$_listOfSolvedQuestion") : null;
 
     setState(() {});
   }
@@ -64,7 +64,7 @@ class _CardScreenState extends State<CardScreen> {
       setState(() {});
       return;
     }
-    logger.d("Index: $_index\nLength: ${_listOfQuestion.length}");
+    doShowLogger? logger.d("Index: $_index\nLength: ${_listOfQuestion.length}") : null;
     _didAnythingChange = true;
     _listOfSolvedQuestion.add(_listOfQuestion[_index]['question']);
     _listOfQuestion.removeAt(_index);
@@ -76,7 +76,7 @@ class _CardScreenState extends State<CardScreen> {
   }
 
   void _onTapDoNotKnew() {
-    logger.d("Index: $_index\nLength: ${_listOfQuestion.length}");
+    doShowLogger? logger.d("Index: $_index\nLength: ${_listOfQuestion.length}"): null;
     _index = _random.nextInt(_listOfQuestion.length);
     _flipCardController.toggleCardWithoutAnimation();
     setState(() {});
@@ -105,9 +105,9 @@ class _CardScreenState extends State<CardScreen> {
                 .eq('user_id', userId ?? '')
                 .single();
 
-            logger.i(solved);
+            doShowLogger? logger.i(solved) : null;
 
-            logger.d("List of Solved Question: $_listOfSolvedQuestion)");
+            doShowLogger? logger.d("List of Solved Question: $_listOfSolvedQuestion)") : null;
 
             List<dynamic> userSolvedQuestions = solved['solved_question'];
 
@@ -177,7 +177,7 @@ class _CardScreenState extends State<CardScreen> {
           }
         } catch (e) {
           _didAnythingChange = false;
-          logger.e(e.toString());
+          doShowLogger? logger.e(e.toString()) : null;
         }
 
         if (context.mounted) {

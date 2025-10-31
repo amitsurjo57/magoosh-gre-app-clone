@@ -63,9 +63,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       qusModel.groupId) {
                     userSolvedQuestionModel = qusModel;
 
-                    logger.i(
+                    doShowLogger? logger.i(
                       "Group Id: ${userSolvedQuestionModel.groupId}\nSolved: ${userSolvedQuestionModel.solved}",
-                    );
+                    ) : null;
 
                     break;
                   }
