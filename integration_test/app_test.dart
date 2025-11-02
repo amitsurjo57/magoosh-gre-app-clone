@@ -25,11 +25,14 @@ void main() {
       await $(#emailField).enterText('amitsurjo57@gmail.com');
       await $(#passwordField).enterText('123456789');
       await $(#login).tap();
-      await $(#practice_this_deck_1).tap();
+      await $(#practice_this_deck_7).scrollTo();
+      await wait(2);
+      await $(#practice_this_deck_7).tap();
       await $('Tap to see meaning').tap();
       await $('I knew this word').tap();
       await $(Icons.arrow_back).tap();
-      await $(#practice_this_deck_1).scrollTo();
+      await $(#practice_this_deck_7).scrollTo();
+      await wait(2);
       await $(Icons.menu).tap();
       await $('Sign out').tap();
     },
