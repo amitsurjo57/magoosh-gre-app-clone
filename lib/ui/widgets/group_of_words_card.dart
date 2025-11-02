@@ -89,7 +89,11 @@ class _GroupOfWordsCardState extends State<GroupOfWordsCard> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   spacing: 8,
                   children: [
-                    Text("Practice this deck", style: TextStyle(fontSize: 16)),
+                    Text(
+                      key: Key("practice_this_deck_${widget.groupIndex}"),
+                      "Practice this deck",
+                      style: TextStyle(fontSize: 16),
+                    ),
                     Icon(Icons.arrow_forward, size: 28),
                   ],
                 ),

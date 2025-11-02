@@ -25,12 +25,18 @@ void main() {
       await $(#emailField).enterText('amitsurjo57@gmail.com');
       await $(#passwordField).enterText('123456789');
       await $(#login).tap();
-      await $('Practice this deck').tap();
+      await $(#practice_this_deck_8).scrollTo();
+      await $(#practice_this_deck_8).tap();
       await $('Tap to see meaning').tap();
       await $('I knew this word').tap();
       await $(Icons.arrow_back).tap();
+      await $(#practice_this_deck_8).scrollTo();
       await $(Icons.menu).tap();
       await $('Sign out').tap();
     },
   );
+}
+
+Future<void> wait(int seconds) async {
+  await Future.delayed(Duration(seconds: seconds));
 }
