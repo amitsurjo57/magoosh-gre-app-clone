@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 
 void main() {
   patrolTest(
-    'Log In Test',
+    'App Test',
     framePolicy: LiveTestWidgetsFlutterBindingFramePolicy.fullyLive,
     ($) async {
       await initializeSupabase();
@@ -25,14 +25,19 @@ void main() {
       await $(#emailField).enterText('amitsurjo57@gmail.com');
       await $(#passwordField).enterText('123456789');
       await $(#login).tap();
-      await $(#practice_this_deck_7).scrollTo();
+
+      final questionGroup = $(#practice_this_deck_2);
+      await questionGroup.scrollTo();
       await wait(2);
-      await $(#practice_this_deck_7).tap();
+      await questionGroup.tap();
+
       await $('Tap to see meaning').tap();
       await $('I knew this word').tap();
       await $(Icons.arrow_back).tap();
-      await $(#practice_this_deck_7).scrollTo();
+
+      await questionGroup.scrollTo();
       await wait(2);
+
       await $(Icons.menu).tap();
       await $('Sign out').tap();
     },
