@@ -26,7 +26,7 @@ void main() {
       await $(#passwordField).enterText('123456789');
       await $(#login).tap();
 
-      final questionGroup = $(#practice_this_deck_2);
+      final questionGroup = $(#practice_this_deck_8);
       await questionGroup.scrollTo();
       await wait(2);
       await questionGroup.tap();
