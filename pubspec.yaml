@@ -53,7 +53,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito:
-  patrol:
+  patrol: ^3.19.0
   build_runner:
   flutter_lints: ^6.0.0
   test_api: any

@@ -49,7 +49,7 @@
     },
     {
       "name": "build_runner",
-      "version": "2.10.1",
+      "version": "2.10.5",
       "dependencies": [
         "analyzer",
         "args",
@@ -103,7 +103,7 @@
     },
     {
       "name": "mockito",
-      "version": "5.5.1",
+      "version": "5.6.3",
       "dependencies": [
         "analyzer",
         "build",
@@ -150,7 +150,7 @@
     },
     {
       "name": "shared_preferences",
-      "version": "2.5.3",
+      "version": "2.5.4",
       "dependencies": [
         "flutter",
         "shared_preferences_android",
@@ -182,7 +182,7 @@
     },
     {
       "name": "supabase_flutter",
-      "version": "2.10.3",
+      "version": "2.12.0",
       "dependencies": [
         "app_links",
         "async",
@@ -303,7 +303,7 @@
     },
     {
       "name": "watcher",
-      "version": "1.1.4",
+      "version": "1.2.1",
       "dependencies": [
         "async",
         "path"
@@ -415,7 +415,7 @@
     },
     {
       "name": "dart_style",
-      "version": "3.1.2",
+      "version": "3.1.4",
       "dependencies": [
         "analyzer",
         "args",
@@ -429,7 +429,7 @@
     },
     {
       "name": "crypto",
-      "version": "3.0.6",
+      "version": "3.0.7",
       "dependencies": [
         "typed_data"
       ]
@@ -443,7 +443,7 @@
     },
     {
       "name": "code_builder",
-      "version": "4.11.0",
+      "version": "4.11.1",
       "dependencies": [
         "built_collection",
         "built_value",
@@ -454,7 +454,7 @@
     },
     {
       "name": "built_value",
-      "version": "8.12.0",
+      "version": "8.12.3",
       "dependencies": [
         "built_collection",
         "collection",
@@ -469,7 +469,7 @@
     },
     {
       "name": "build_daemon",
-      "version": "4.1.0",
+      "version": "4.1.1",
       "dependencies": [
         "built_collection",
         "built_value",
@@ -497,7 +497,7 @@
     },
     {
       "name": "build",
-      "version": "4.0.2",
+      "version": "4.0.4",
       "dependencies": [
         "analyzer",
         "crypto",
@@ -514,7 +514,7 @@
     },
     {
       "name": "analyzer",
-      "version": "8.4.0",
+      "version": "10.0.1",
       "dependencies": [
         "_fe_analyzer_shared",
         "collection",
@@ -551,7 +551,7 @@
     },
     {
       "name": "http",
-      "version": "1.5.0",
+      "version": "1.6.0",
       "dependencies": [
         "async",
         "http_parser",
@@ -561,7 +561,7 @@
     },
     {
       "name": "equatable",
-      "version": "2.0.7",
+      "version": "2.0.8",
       "dependencies": [
         "collection",
         "meta"
@@ -569,7 +569,7 @@
     },
     {
       "name": "source_gen",
-      "version": "4.0.2",
+      "version": "4.1.2",
       "dependencies": [
         "analyzer",
         "async",
@@ -624,7 +624,7 @@
     },
     {
       "name": "image",
-      "version": "4.5.4",
+      "version": "4.7.2",
       "dependencies": [
         "archive",
         "meta",
@@ -692,7 +692,7 @@
     },
     {
       "name": "shared_preferences_foundation",
-      "version": "2.5.5",
+      "version": "2.5.6",
       "dependencies": [
         "flutter",
         "shared_preferences_platform_interface"
@@ -700,7 +700,7 @@
     },
     {
       "name": "shared_preferences_android",
-      "version": "2.4.15",
+      "version": "2.4.18",
       "dependencies": [
         "flutter",
         "shared_preferences_platform_interface"
@@ -739,7 +739,7 @@
     },
     {
       "name": "supabase",
-      "version": "2.10.0",
+      "version": "2.10.2",
       "dependencies": [
         "functions_client",
         "gotrue",
@@ -829,9 +829,10 @@
     },
     {
       "name": "_fe_analyzer_shared",
-      "version": "91.0.0",
+      "version": "93.0.0",
       "dependencies": [
-        "meta"
+        "meta",
+        "source_span"
       ]
     },
     {
@@ -925,15 +926,17 @@
     },
     {
       "name": "path_provider_foundation",
-      "version": "2.4.3",
+      "version": "2.6.0",
       "dependencies": [
+        "ffi",
         "flutter",
+        "objective_c",
         "path_provider_platform_interface"
       ]
     },
     {
       "name": "path_provider_android",
-      "version": "2.2.20",
+      "version": "2.2.22",
       "dependencies": [
         "flutter",
         "path_provider_platform_interface"
@@ -941,7 +944,7 @@
     },
     {
       "name": "url_launcher_windows",
-      "version": "3.1.4",
+      "version": "3.1.5",
       "dependencies": [
         "flutter",
         "url_launcher_platform_interface"
@@ -949,7 +952,7 @@
     },
     {
       "name": "url_launcher_web",
-      "version": "2.4.1",
+      "version": "2.4.2",
       "dependencies": [
         "flutter",
         "flutter_web_plugins",
@@ -967,7 +970,7 @@
     },
     {
       "name": "url_launcher_macos",
-      "version": "3.2.4",
+      "version": "3.2.5",
       "dependencies": [
         "flutter",
         "url_launcher_platform_interface"
@@ -975,7 +978,7 @@
     },
     {
       "name": "url_launcher_linux",
-      "version": "3.2.1",
+      "version": "3.2.2",
       "dependencies": [
         "flutter",
         "url_launcher_platform_interface"
@@ -983,7 +986,7 @@
     },
     {
       "name": "url_launcher_ios",
-      "version": "6.3.5",
+      "version": "6.3.6",
       "dependencies": [
         "flutter",
         "url_launcher_platform_interface"
@@ -991,7 +994,7 @@
     },
     {
       "name": "url_launcher_android",
-      "version": "6.3.24",
+      "version": "6.3.28",
       "dependencies": [
         "flutter",
         "url_launcher_platform_interface"
@@ -1023,7 +1026,7 @@
     },
     {
       "name": "realtime_client",
-      "version": "2.6.0",
+      "version": "2.7.0",
       "dependencies": [
         "collection",
         "http",
@@ -1034,7 +1037,7 @@
     },
     {
       "name": "postgrest",
-      "version": "2.5.0",
+      "version": "2.6.0",
       "dependencies": [
         "http",
         "logging",
@@ -1044,10 +1047,11 @@
     },
     {
       "name": "gotrue",
-      "version": "2.16.0",
+      "version": "2.18.0",
       "dependencies": [
         "collection",
         "crypto",
+        "dart_jsonwebtoken",
         "http",
         "jwt_decode",
         "logging",
@@ -1117,7 +1121,7 @@
     },
     {
       "name": "ffi",
-      "version": "2.1.4",
+      "version": "2.1.5",
       "dependencies": []
     },
     {
@@ -1134,9 +1138,32 @@
       ]
     },
     {
+      "name": "objective_c",
+      "version": "9.2.2",
+      "dependencies": [
+        "code_assets",
+        "collection",
+        "ffi",
+        "hooks",
+        "logging",
+        "native_toolchain_c",
+        "pub_semver"
+      ]
+    },
+    {
       "name": "retry",
       "version": "3.1.2",
       "dependencies": []
+    },
+    {
+      "name": "dart_jsonwebtoken",
+      "version": "3.3.1",
+      "dependencies": [
+        "clock",
+        "convert",
+        "ed25519_edwards",
+        "pointycastle"
+      ]
     },
     {
       "name": "jwt_decode",
@@ -1150,6 +1177,63 @@
         "ffi",
         "flutter",
         "meta"
+      ]
+    },
+    {
+      "name": "native_toolchain_c",
+      "version": "0.17.2",
+      "dependencies": [
+        "code_assets",
+        "glob",
+        "hooks",
+        "logging",
+        "meta",
+        "pub_semver"
+      ]
+    },
+    {
+      "name": "hooks",
+      "version": "0.20.5",
+      "dependencies": [
+        "collection",
+        "crypto",
+        "logging",
+        "meta",
+        "pub_semver",
+        "yaml"
+      ]
+    },
+    {
+      "name": "code_assets",
+      "version": "0.19.10",
+      "dependencies": [
+        "collection",
+        "hooks"
+      ]
+    },
+    {
+      "name": "ed25519_edwards",
+      "version": "0.3.1",
+      "dependencies": [
+        "adaptive_number",
+        "collection",
+        "convert",
+        "crypto"
+      ]
+    },
+    {
+      "name": "pointycastle",
+      "version": "4.0.0",
+      "dependencies": [
+        "collection",
+        "convert"
+      ]
+    },
+    {
+      "name": "adaptive_number",
+      "version": "1.0.0",
+      "dependencies": [
+        "fixnum"
       ]
     }
   ],
